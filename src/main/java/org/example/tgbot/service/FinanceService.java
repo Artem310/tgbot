@@ -8,6 +8,8 @@ import org.example.tgbot.repository.SpendRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +27,16 @@ public class FinanceService {
             Income income = new Income();
             income.setChatId(chatId);
             income.setIncome(new BigDecimal(price));
+            LocalDate ld = LocalDate.now();
+            income.setDate(Date.valueOf(ld));
             incomeRepository.save(income);
             message = "Доход в размере " + price + " был успешно добавлен";
         } else {
             Spend spend = new Spend();
             spend.setChatId(chatId);
             spend.setSpend(new BigDecimal(price));
+            LocalDate ld = LocalDate.now();
+            spend.setDate(Date.valueOf(ld));
             spendRepository.save(spend);
             message = "Расход в размере " + price + " был успешно добавлен";
         }
